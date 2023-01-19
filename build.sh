@@ -36,13 +36,18 @@ if [ -x "$(command -v "$pip_command")" -a -f "$pip_requirements_file" ]; then
 
   PYTHONUSERBASE=$build_dir/home/.local "$pip_command" install --user -I -r "$pip_requirements_file"
 
+  python_command="$(command -v python)"
+  if [ -z "$python_command" ]; then
+    python_command="$(command -v python3)"
+  fi
+
   # Fix python shebang
-  pypath=`readlink -f $(which python)`
+  pypath=`readlink -f $(which "$python_command")`
   if [ -d "$build_dir/home/.local/bin" ]; then
     echo 'Fix PyPi packages shebang'
     sed -i '1s|#!'$pypath'|#!/usr/bin/env python|' $build_dir/home/.local/bin/*
   fi
 
 else
-  echo 'Skip pip packages installation: pip not found.'
+  echo 'Skip pip packages installation: pip not found or no pip-requirements.txt file.'
 fi
