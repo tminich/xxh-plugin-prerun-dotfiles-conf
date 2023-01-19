@@ -46,6 +46,7 @@ if [ -x "$(command -v "$pip_command")" -a -f "$pip_requirements_file" ]; then
   if [ -d "$build_dir/home/.local/bin" ]; then
     echo 'Fix PyPi packages shebang'
     sed -i '1s|#!'$pypath'|#!/usr/bin/env python|' $build_dir/home/.local/bin/*
+    sed -i '1s|#!'$python_command'|#!/usr/bin/env python|' $build_dir/home/.local/bin/*
   fi
 
 else
