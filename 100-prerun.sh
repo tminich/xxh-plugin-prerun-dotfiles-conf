@@ -1,7 +1,7 @@
 if [[ $XDG_CACHE_HOME ]]; then
-  done_file=$XDG_CACHE_HOME/xxh-plugin-prerun-dotfiles-done
+  done_file=$XDG_CACHE_HOME/xxh-plugin-prerun-dotfiles-conf-done
 else
-  done_file=$XXH_HOME/.xxh-plugin-prerun-dotfiles-done
+  done_file=$XXH_HOME/.xxh-plugin-prerun-dotfiles-conf-done
 fi
 
 if [[ ! -f $done_file ]]; then
@@ -19,13 +19,13 @@ if [[ ! -f $done_file ]]; then
 
     if [[ -f $item && ! -f $target_item ]]; then
       if [[ $XXH_VERBOSE == '1' || $XXH_VERBOSE == '2' ]]; then
-        echo "xxh-plugin-prerun-dotfiles: Create file $target_item"
+        echo "xxh-plugin-prerun-dotfiles-conf: Create file $target_item"
       fi
       mkdir -p $target_dir
       cp -R $item $target_item
     elif [[ -d $item && ! -d $target_item ]]; then
       if [[ $XXH_VERBOSE == '1' || $XXH_VERBOSE == '2' ]]; then
-        echo "xxh-plugin-prerun-dotfiles: Create dir $target_item"
+        echo "xxh-plugin-prerun-dotfiles-conf: Create dir $target_item"
       fi
       mkdir -p $target_item
     fi
