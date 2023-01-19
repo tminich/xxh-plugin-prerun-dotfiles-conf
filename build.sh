@@ -43,10 +43,12 @@ if [ -x "$(command -v "$pip_command")" -a -f "$pip_requirements_file" ]; then
 
   # Fix python shebang
   pypath=`readlink -f $(which "$python_command")`
-  if [ -d "$build_dir/home/.local/bin" ]; then
+  python_bin_dir="$build_dir/home/.local/bin"
+  if [ -d "$python_bin_dir" ]; then
     echo 'Fix PyPi packages shebang'
-    sed -i '1s|#!'$pypath'|#!/usr/bin/env python|' $build_dir/home/.local/bin/*
-    sed -i '1s|#!'$python_command'|#!/usr/bin/env python|' $build_dir/home/.local/bin/*
+    for file in $(grep -E -e "^#!.*python(3([.][[:digit:]]+)?)?\$" -l "$python_bin_dir"/*); do
+      sed -i "1s~^#\!.\+~#\!/usr/bin/env python~" $file
+    done
   fi
 
 else
